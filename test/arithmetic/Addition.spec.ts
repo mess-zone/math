@@ -1,5 +1,33 @@
 import { describe, expect, test } from "vitest";
 
+enum Place {
+    ONES = 0,
+    TENS = 1,
+    HUNDREDS = 2,
+    THOUSANDS = 3,
+    TEN_THOUSANDS = 4,
+}
+
+class PlaceValueTable {
+    private table: number[]
+
+    private constructor(array: number[]) {
+        this.table = array
+    }
+
+    getPlace(position: number) {
+        return this.table[position]
+    }
+
+    static create(value: number) {
+        // Converts the number to string, splits into chars, maps back to numbers, reverse array
+        return new PlaceValueTable(value
+            .toString()
+            .split('')
+            .map(Number)
+            .reverse())
+    }
+}
 
 class StandardAddition {
 
@@ -30,7 +58,20 @@ class StandardAddition {
     }
 }
 
+describe('PlaceValueTable', () => {
+    test('Should create a place value table from a number', () => {
+        const placeValue = PlaceValueTable.create(345)
+        expect(placeValue.getPlace(Place.ONES)).toBe(5) 
+        expect(placeValue.getPlace(Place.TENS)).toBe(4) 
+        expect(placeValue.getPlace(Place.HUNDREDS)).toBe(3) 
+        expect(placeValue.getPlace(Place.THOUSANDS)).toBe(undefined) 
+        expect(placeValue.getPlace(Place.TEN_THOUSANDS)).toBe(undefined) 
+    })
+
+})
+
 describe('Addition', () => {
+
     test('Should add', () => {
         const parcela1 = 2
         const parcela2 = 3
