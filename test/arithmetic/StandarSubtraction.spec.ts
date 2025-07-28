@@ -90,4 +90,17 @@ describe('Standard Subtraction', () => {
 
         expect(sut.getDiferenca().toNumber()).toBe(43120)
     })
+
+    test('Should subtract order 2 numbers with regrouping (borrow one)', () => {
+        const minuendo =   50
+        const subtraendo = 13
+
+        const sut = new StandardSubtraction()
+        sut.setMinuendo(minuendo)
+        sut.setSubtraendo(subtraendo)
+
+        sut.run()
+
+        expect(sut.getDiferenca().toNumber()).toBe(37)
+    })
 })

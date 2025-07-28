@@ -39,18 +39,18 @@ export class StandardAddition {
         const size = Math.max(this._parcela1.getOrder(), this._parcela2.getOrder())
 
         for(let i = 0; i < size; i++) {
-            const value1 = this._parcela1.getPlace(i) || 0
-            const value2 = this._parcela2.getPlace(i) || 0
+            const digit1 = this._parcela1.getPlace(i) || 0
+            const digit2 = this._parcela2.getPlace(i) || 0
             const carry = this._carryBuffer.getPlace(i) || 0
 
-            const { digit, carryFlag } = this.addDigits(value1, value2, carry)
+            const { digit, carryFlag } = this.addDigits(digit1, digit2, carry)
 
             this._total.setPlace(i, digit)
             if(carryFlag) {
                 this._carryBuffer.setPlace(i + 1, 1)
             }
 
-            console.log(`${i}: ${carry ? `[${carry}] +` : ''} ${value1} + ${value2} = ${this._total.getPlace(i)} ${carryFlag ? '(carry one)' : '' }`)
+            console.log(`${i}: ${carry ? `[${carry}] +` : ''} ${digit1} + ${digit2} = ${digit} ${carryFlag ? '(carry one)' : '' }`)
         }
 
         if(this._carryBuffer.getPlace(size)) {
