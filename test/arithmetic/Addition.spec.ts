@@ -24,6 +24,10 @@ class PlaceValueTable {
         return this.table[position]
     }
 
+    setPlace(position: number, value: number) {
+        this.table[position] = value
+    }
+
     getOrder() {
         return this.table.length
     }
@@ -51,9 +55,9 @@ class StandardAddition {
     private _total: PlaceValueTable
 
     constructor() {
-        // this._parcela1 = 0
-        // this._parcela2 = 0
-        // this._total = 0
+        this._parcela1 = new PlaceValueTable()
+        this._parcela2 = new PlaceValueTable()
+        this._total = new PlaceValueTable()
     }
     
     setParcela1(value: number) {
@@ -71,13 +75,9 @@ class StandardAddition {
     run() {
         const size = Math.max(this._parcela1.getOrder(), this._parcela2.getOrder())
 
-        const result: number[] = []
         for(let i = 0; i < size; i++) {
-            result.push(this._parcela1.getPlace(i) + this._parcela2.getPlace(i))
+            this._total.setPlace(i, this._parcela1.getPlace(i) + this._parcela2.getPlace(i))
         }
-
-        this._total = PlaceValueTable.fromArray(result)
-        
     }
 }
 
