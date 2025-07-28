@@ -11,8 +11,13 @@ enum Place {
 class PlaceValueTable {
     private table: number[]
 
-    constructor(array: number[]) {
-        this.table = array
+    constructor(value: number = 0) {
+        // Converts the number to string, splits into chars, maps back to numbers, reverse array
+        this.table =  value
+            .toString()
+            .split('')
+            .map(Number)
+            .reverse()
     }
 
     getPlace(position: number) {
@@ -23,13 +28,15 @@ class PlaceValueTable {
         return this.table.length
     }
 
-    static create(value: number) {
-        // Converts the number to string, splits into chars, maps back to numbers, reverse array
-        return new PlaceValueTable(value
-            .toString()
-            .split('')
-            .map(Number)
-            .reverse())
+    /**
+     * 
+     * @param tableValue array[0] ones, array[1] tens, array[2] hundereds, etc
+     * @returns 
+     */
+    static fromArray(tableValue: number[]) {
+        const result = new PlaceValueTable()
+        result.table = tableValue
+        return result
     }
 
     toNumber() {
@@ -50,11 +57,11 @@ class StandardAddition {
     }
     
     setParcela1(value: number) {
-        this._parcela1 = PlaceValueTable.create(value)
+        this._parcela1 = new PlaceValueTable(value)
     }
     
     setParcela2(value: number) {
-        this._parcela2 = PlaceValueTable.create(value)
+        this._parcela2 = new PlaceValueTable(value)
     }
 
     getTotal() {
@@ -63,21 +70,20 @@ class StandardAddition {
 
     run() {
         const size = Math.max(this._parcela1.getOrder(), this._parcela2.getOrder())
-        console.log(size)
 
         const result: number[] = []
         for(let i = 0; i < size; i++) {
             result.push(this._parcela1.getPlace(i) + this._parcela2.getPlace(i))
         }
 
-        this._total = new PlaceValueTable(result)
+        this._total = PlaceValueTable.fromArray(result)
         
     }
 }
 
 describe('PlaceValueTable', () => {
     test('Should create a place value table from a positive number', () => {
-        const placeValue = PlaceValueTable.create(0)
+        const placeValue = new PlaceValueTable()
         expect(placeValue.getPlace(Place.ONES)).toBe(0) 
         expect(placeValue.getPlace(Place.TENS)).toBe(undefined) 
         expect(placeValue.getPlace(Place.HUNDREDS)).toBe(undefined) 
@@ -89,7 +95,7 @@ describe('PlaceValueTable', () => {
     })
 
     test('Should create a place value table from a positive number', () => {
-        const placeValue = PlaceValueTable.create(345)
+        const placeValue = new PlaceValueTable(345)
         expect(placeValue.getPlace(Place.ONES)).toBe(5) 
         expect(placeValue.getPlace(Place.TENS)).toBe(4) 
         expect(placeValue.getPlace(Place.HUNDREDS)).toBe(3) 
