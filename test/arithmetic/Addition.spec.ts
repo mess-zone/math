@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-enum Place {
+enum Places {
     ONES = 0,
     TENS = 1,
     HUNDREDS = 2,
@@ -9,9 +9,13 @@ enum Place {
 }
 
 class PlaceValueTable {
+    /**
+     * table[0] ones, table[1] tens, table[2] hundreds, etc
+     * */
     private table: number[]
 
     constructor(value: number = 0) {
+        if(value < 0) throw new Error('Negative numbers not supported yet')
         // Converts the number to string, splits into chars, maps back to numbers, reverse array
         this.table =  value
             .toString()
@@ -34,7 +38,7 @@ class PlaceValueTable {
 
     /**
      * 
-     * @param tableValue array[0] ones, array[1] tens, array[2] hundereds, etc
+     * @param tableValue array[0] ones, array[1] tens, array[2] hundreds, etc
      * @returns 
      */
     static fromArray(tableValue: number[]) {
@@ -111,11 +115,11 @@ class StandardAddition {
 describe('PlaceValueTable', () => {
     test('Should create a place value table from a positive number', () => {
         const placeValue = new PlaceValueTable()
-        expect(placeValue.getPlace(Place.ONES)).toBe(0) 
-        expect(placeValue.getPlace(Place.TENS)).toBe(undefined) 
-        expect(placeValue.getPlace(Place.HUNDREDS)).toBe(undefined) 
-        expect(placeValue.getPlace(Place.THOUSANDS)).toBe(undefined) 
-        expect(placeValue.getPlace(Place.TEN_THOUSANDS)).toBe(undefined) 
+        expect(placeValue.getPlace(Places.ONES)).toBe(0) 
+        expect(placeValue.getPlace(Places.TENS)).toBe(undefined) 
+        expect(placeValue.getPlace(Places.HUNDREDS)).toBe(undefined) 
+        expect(placeValue.getPlace(Places.THOUSANDS)).toBe(undefined) 
+        expect(placeValue.getPlace(Places.TEN_THOUSANDS)).toBe(undefined) 
 
         expect(placeValue.getOrder()).toBe(1)
         expect(placeValue.toNumber()).toBe(0)
@@ -123,14 +127,18 @@ describe('PlaceValueTable', () => {
 
     test('Should create a place value table from a positive number', () => {
         const placeValue = new PlaceValueTable(345)
-        expect(placeValue.getPlace(Place.ONES)).toBe(5) 
-        expect(placeValue.getPlace(Place.TENS)).toBe(4) 
-        expect(placeValue.getPlace(Place.HUNDREDS)).toBe(3) 
-        expect(placeValue.getPlace(Place.THOUSANDS)).toBe(undefined) 
-        expect(placeValue.getPlace(Place.TEN_THOUSANDS)).toBe(undefined) 
+        expect(placeValue.getPlace(Places.ONES)).toBe(5) 
+        expect(placeValue.getPlace(Places.TENS)).toBe(4) 
+        expect(placeValue.getPlace(Places.HUNDREDS)).toBe(3) 
+        expect(placeValue.getPlace(Places.THOUSANDS)).toBe(undefined) 
+        expect(placeValue.getPlace(Places.TEN_THOUSANDS)).toBe(undefined) 
 
         expect(placeValue.getOrder()).toBe(3)
         expect(placeValue.toNumber()).toBe(345)
+    })
+
+    test('Should not support negative numbers', () => {
+        expect(() => new PlaceValueTable(-1)).toThrow()
     })
 
 })
