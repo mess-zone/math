@@ -11,7 +11,7 @@ export class StandardAddition {
         this._parcela1 = new PlaceValueTable(0)
         this._parcela2 = new PlaceValueTable(0)
         this._carryBuffer = new PlaceValueTable(0)
-        this._total = new PlaceValueTable()
+        this._total = new PlaceValueTable(0)
     }
     
     setParcela1(value: number) {
