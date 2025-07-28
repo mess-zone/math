@@ -106,7 +106,7 @@ describe('Standard Subtraction', () => {
 
     test('Should subtract order 3 numbers with regrouping (borrow one)', () => {
         const minuendo =   500
-        const subtraendo =  13
+        const subtraendo =  413
 
         const sut = new StandardSubtraction()
         sut.setMinuendo(minuendo)
@@ -114,10 +114,23 @@ describe('Standard Subtraction', () => {
 
         sut.run()
 
-        expect(sut.getDiferenca().toNumber()).toBe(487)
+        expect(sut.getDiferenca().toNumber()).toBe(87)
     })
 
     test('Should subtract order 4 numbers with regrouping (borrow one)', () => {
+        const minuendo =   2000
+        const subtraendo = 1153
+
+        const sut = new StandardSubtraction()
+        sut.setMinuendo(minuendo)
+        sut.setSubtraendo(subtraendo)
+
+        sut.run()
+
+        expect(sut.getDiferenca().toNumber()).toBe(847)
+    })
+
+    test('Should subtract different order numbers with regrouping (borrow one)', () => {
         const minuendo =   1000
         const subtraendo =  153
 
@@ -128,5 +141,18 @@ describe('Standard Subtraction', () => {
         sut.run()
 
         expect(sut.getDiferenca().toNumber()).toBe(847)
+    })
+
+    test('Same number subtraction should be zero', () => {
+        const minuendo =   1564
+        const subtraendo = 1564
+
+        const sut = new StandardSubtraction()
+        sut.setMinuendo(minuendo)
+        sut.setSubtraendo(subtraendo)
+
+        sut.run()
+
+        expect(sut.getDiferenca().toNumber()).toBe(0)
     })
 })
