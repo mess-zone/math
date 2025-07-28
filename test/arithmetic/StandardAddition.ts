@@ -31,7 +31,7 @@ export class StandardAddition {
      
         return {
             digit: sum % 10,
-            carryFlag: sum >= 10
+            carryFlag: sum > 9
         }
     }
 
