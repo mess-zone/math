@@ -103,4 +103,30 @@ describe('Standard Subtraction', () => {
 
         expect(sut.getDiferenca().toNumber()).toBe(37)
     })
+
+    test('Should subtract order 3 numbers with regrouping (borrow one)', () => {
+        const minuendo =   500
+        const subtraendo =  13
+
+        const sut = new StandardSubtraction()
+        sut.setMinuendo(minuendo)
+        sut.setSubtraendo(subtraendo)
+
+        sut.run()
+
+        expect(sut.getDiferenca().toNumber()).toBe(487)
+    })
+
+    test('Should subtract order 4 numbers with regrouping (borrow one)', () => {
+        const minuendo =   1000
+        const subtraendo =  153
+
+        const sut = new StandardSubtraction()
+        sut.setMinuendo(minuendo)
+        sut.setSubtraendo(subtraendo)
+
+        sut.run()
+
+        expect(sut.getDiferenca().toNumber()).toBe(847)
+    })
 })
