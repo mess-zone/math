@@ -76,7 +76,7 @@ class StandardAddition {
         const size = Math.max(this._parcela1.getOrder(), this._parcela2.getOrder())
 
         for(let i = 0; i < size; i++) {
-            this._total.setPlace(i, this._parcela1.getPlace(i) + this._parcela2.getPlace(i))
+            this._total.setPlace(i, (this._parcela1.getPlace(i) || 0) + (this._parcela2.getPlace(i) || 0))
         }
     }
 }
@@ -173,5 +173,18 @@ describe('Addition', () => {
         sut.run()
 
         expect(sut.getTotal().toNumber()).toBe(75183)
+    })
+
+    test('Should add different order numbers', () => {
+        const parcela1 = 32070
+        const parcela2 = 421
+
+        const sut = new StandardAddition()
+        sut.setParcela1(parcela1)
+        sut.setParcela2(parcela2)
+
+        sut.run()
+
+        expect(sut.getTotal().toNumber()).toBe(32491)
     })
 })
